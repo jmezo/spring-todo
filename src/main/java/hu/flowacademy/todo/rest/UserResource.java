@@ -29,13 +29,18 @@ public class UserResource {
 //    }
 
     @GetMapping("/users/{username}")
-    @PreAuthorize("#username == authentication.name || hasAuthority('ADMIN')")
+//    @PreAuthorize("#username == authentication.name || hasAuthority('ADMIN')")
     public User findByName(@PathVariable String username) {
         return userService.findByUsername(username);
     }
 
     @PostMapping("/users")
     public User create(@RequestBody User user) {
+        return userService.save(user);
+    }
+
+    @PostMapping("/users/new")
+    public User register(@RequestBody User user) {
         return userService.save(user);
     }
 

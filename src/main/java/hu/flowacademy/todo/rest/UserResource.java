@@ -18,13 +18,20 @@ public class UserResource {
     private final UserService userService;
 
     @GetMapping("/users")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<User> findAll() {
         return userService.findAll();
     }
 
-    @GetMapping("/users/{id}")
-    public User findOne(@PathVariable Long id) {
-        return userService.findOne(id);
+//    @GetMapping("/users/{id}")
+//    public User findOne(@PathVariable Long id) {
+//        return userService.findOne(id);
+//    }
+
+    @GetMapping("/users/{username}")
+    @PreAuthorize("#username == authentication.name || hasAuthority('ADMIN')")
+    public User findByName(@PathVariable String username) {
+        return userService.findByUsername(username);
     }
 
     @PostMapping("/users")

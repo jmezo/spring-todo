@@ -27,6 +27,10 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
+    public User findByUsername(String username) {
+        return userRepository.findFirstByUsername(username).orElseThrow();
+    }
+
     public User save(User user) {
         if (user.getId() == null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
